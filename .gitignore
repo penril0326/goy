@@ -1,0 +1,22 @@
+# Ignore files build by xcode
+*.mode*v*
+*.pbxuser
+*.xcbkptlist
+*.xcworkspacedata
+*.xcuserstate
+*.xccheckout
+xcschememanagement.plist
+.DS_Store
+._.*
+xcuserdata/
+DerivedData/
+
+# Ignore files built by JetBrains
+.idea
+
+#Ignore secret file
+secret.go
+
+# Ignore node module packages
+node_modules
+package-lock.json
