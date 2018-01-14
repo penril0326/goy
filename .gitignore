@@ -20,3 +20,4 @@ secret.go
 # Ignore node module packages
 node_modules
 package-lock.json
+goy-export
