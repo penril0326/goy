@@ -4,7 +4,7 @@ let CleanWebpackPlugin = require('clean-webpack-plugin');
 let HtmlWebpackPlugin = require("html-webpack-plugin");
 
 // Phaser webpack config
-let phaserModule = path.join(__dirname, "node_modules/phaser-ce/");
+let phaserModule = path.join(__dirname, "../../node_modules/phaser-ce/");
 let phaser = path.join(phaserModule, "build/custom/phaser-split.js");
 let pixi = path.join(phaserModule, "build/custom/pixi.js");
 let p2 = path.join(phaserModule, "build/custom/p2.js");
@@ -27,14 +27,14 @@ module.exports = {
         path: path.resolve(__dirname, "local/goy-export/assets/js/"),
         // output html載入js的路徑
         publicPath: "/assets/js/",
-        filename: "hello.js"
+        filename: "downstairs.js"
     },
     plugins: [
         definePlugin,
         new CleanWebpackPlugin(["local/goy-export/"]),
         new HtmlWebpackPlugin({
             // html的輸出路徑 (相對於output.path)
-            filename: "../../hello.html",
+            filename: "../../downstairs.html",
             // html樣本路徑 (相對於根目錄)
             template: "front/tpl/container.html",
             minify: {

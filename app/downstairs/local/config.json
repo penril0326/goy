@@ -1,0 +1,9 @@
+{
+  "ProjectName": "downstairs",
+  "ExportDir": "./goy-export/",
+  "IndexFile": "downstairs.html",
+  "RootDir": "../../../",
+  "FrontDir": "../../../front/",
+  "TplDir": "../../../front/tpl/",
+  "StyleDir": "../../../front/style/"
+}
