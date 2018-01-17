@@ -15,6 +15,6 @@ export default {
     SimplePlayer1Text: "P1",
     SimplePlayer2Text: "P2",
     ControlText: "Control",
-    FollowMeOnText: "Follow me on",
+    FollowMeText: "Follow me : ",
     NoSupportMobileText: "Sorry, this game does not support mobile platform, please use your desktop browser to play."
 };

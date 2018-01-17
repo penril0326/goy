@@ -4,13 +4,14 @@ import Mask from "../element/mask";
 import * as GlobalConst from "../globalconst";
 
 class CountDown01 extends Container {
-    constructor(game, countTime, countSpeed, finalText, fontStyle, timer) {
+    constructor(game, countTime, countSpeed, finalText, bitmapKey, textSize, timer) {
         super(game);
         this.isRunning = false;
         this.countTime = countTime;
         this.countSpeed = countSpeed;
         this.finalText = finalText;
-        this.fontStyle = fontStyle;
+        this.bitmapKey = bitmapKey;
+        this.textSize = textSize;
         if (timer === undefined) {
             timer = game.time.events;
         }
@@ -21,12 +22,13 @@ class CountDown01 extends Container {
         this.addAsset("mask", mask);
 
         // 倒數數字
-        let countDownText = new Phaser.Text(
+        let countDownText = new Phaser.BitmapText(
             this.game,
             game.camera.width / 2,
             game.camera.height / 2,
+            this.bitmapKey,
             this.countTime,
-            this.fontStyle
+            this.textSize
         );
         countDownText.anchor.setTo(
             GlobalConst.CenterAnchor.X,

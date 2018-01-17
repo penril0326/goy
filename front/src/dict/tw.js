@@ -15,6 +15,6 @@ export default {
     SimplePlayer1Text: "玩家1",
     SimplePlayer2Text: "玩家2",
     ControlText: "控制",
-    FollowMeOnText: "來這找我",
+    FollowMeText: "想伯？來這找伯->",
     NoSupportMobileText: "抱歉，此遊戲目前不支援手機版網頁，請使用桌面版瀏覽器遊玩，造成不便敬請見諒。"
 };

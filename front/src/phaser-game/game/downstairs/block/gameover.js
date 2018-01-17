@@ -2,20 +2,19 @@ import Phaser from "phaser";
 import Container from "../../../block/container";
 import Mask from "../../../element/mask";
 import Box from "../../../element/box";
-import DictUS from "../../../../dict/us";
 import * as Config from "../config";
 import * as Util from "../util";
 import * as InputUtil from "../../../util/input";
 import * as GameUtil from "../../../util/game";
+import I18nUtil from "../../../util/i18n";
+import * as GlobalConst from "../../../globalconst";
 
 
 class GameOver extends Container {
-    constructor(game, scoresNumber, inputPriority) {
+    constructor(game, scoresNumber, inputPriority, callback) {
         super(game);
-        // 語系設置
-        this.Dict = DictUS;
-
         this.inputPriority = inputPriority;
+        this.callback = callback;
 
         // 建立遮罩
         let mask = new Mask(game);
@@ -33,12 +32,13 @@ class GameOver extends Container {
         this.addAsset("box", box);
 
         // game over 標題
-        let title = new Phaser.Text(
+        let title = new Phaser.BitmapText(
             this.game,
             Config.GameOverTitlePos.X,
             Config.GameOverTitlePos.Y,
-            this.Dict.GameOverText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.GameOverText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         title.anchor.setTo(
             Config.GameOverTitlePos.Anchor.X,
@@ -47,12 +47,13 @@ class GameOver extends Container {
         this.addAsset("title", title);
 
         // 分數
-        let scores = new Phaser.Text(
+        let scores = new Phaser.BitmapText(
             this.game,
             Config.GameOverScoresPos.X,
             Config.GameOverScoresPos.Y,
-            this.Dict.ScoresText + ": " + scoresNumber.toString(),
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.ScoresText + ": " + scoresNumber.toString(),
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         scores.anchor.setTo(
             Config.GameOverScoresPos.Anchor.X,
@@ -61,12 +62,13 @@ class GameOver extends Container {
         this.addAsset("scores", scores);
 
         // 排名
-        let rank = new Phaser.Text(
+        let rank = new Phaser.BitmapText(
             this.game,
             Config.GameOverRankPos.X,
             Config.GameOverRankPos.Y,
-            this.Dict.RankText + ": " + Util.ranking(scoresNumber) + "%",
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.RankText + ": " + Util.ranking(scoresNumber) + "%",
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         rank.anchor.setTo(
             Config.GameOverRankPos.Anchor.X,
@@ -75,12 +77,13 @@ class GameOver extends Container {
         this.addAsset("rank", rank);
 
         // 建立 continue 按鈕
-        let continueBtn = new Phaser.Text(
+        let continueBtn = new Phaser.BitmapText(
             this.game,
             Config.GameOverContinueButtonPos.X,
             Config.GameOverContinueButtonPos.Y,
-            this.Dict.ContinueText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.ContinueText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         continueBtn.anchor.setTo(
             Config.GameOverContinueButtonPos.Anchor.X,
@@ -98,6 +101,9 @@ class GameOver extends Container {
         let continueBtn = this.inputs["continueBtn"];
         if (InputUtil.checkMouseInObject(this.game.input.mousePointer, continueBtn) === false) {
             return;
+        }
+        if (this.callback) {
+            this.callback();
         }
         this.game.state.start("MainMenu", true, false);
     }

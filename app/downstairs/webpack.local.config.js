@@ -58,7 +58,8 @@ module.exports = {
             { test: /p2\.js/, use: ["expose-loader?p2"] },
             { test: /\.css$/, use: [ 'style-loader', 'css-loader']},
             // img的輸出路徑 (相對於output.path)
-            { test: /\.(png|jpg|gif|json)$/, use: [{loader: 'file-loader', options: { outputPath: "../img/" }}] }
+            { test: /\.(png|jpg|gif|json)$/, use: [{loader: 'file-loader', options: { outputPath: "../img/" }}] },
+            { test: /\.(fnt)$/, use: [{loader: 'file-loader', options: { outputPath: "../font/" }}] }
         ]
     },
     node: {

@@ -1,19 +1,16 @@
 import Phaser from "phaser";
 import * as Config from "../config";
 import * as GlobalConst from "../../../globalconst";
-import DictUS from "../../../../dict/us";
 import SettingMenu from "../block/settingmenu";
 import LedgesRunner from "../block/ledgesrunner";
 import Mask from "../../../element/mask";
 import * as GameUtil from "../../../util/game";
 import * as InputUtil from "../../../util/input";
+import I18nUtil from "../../../util/i18n";
 
 class MainMenuState extends Phaser.State {
     constructor() {
         super();
-        // 依語系載入字典檔
-        this.Dict = DictUS;
-
         // setting main menu objects
         this.mask = null;
         this.ledgesEffect = null;
@@ -25,7 +22,7 @@ class MainMenuState extends Phaser.State {
         this.mainBox = null;
         this.fbIcon = null;
         this.igIcon = null;
-        this.followMeOnText = null;
+        this.followMeText = null;
 
         // setting menu container
         this.settingMenu = null;
@@ -42,21 +39,23 @@ class MainMenuState extends Phaser.State {
         game.add.existing(this.mask);
 
         // 建立 game title
-        let gameTitle = game.add.text(
+        let gameTitle = game.add.bitmapText(
             Config.GameTitlePos.X,
             Config.GameTitlePos.Y,
-            this.Dict.DownStairsGameTitleText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.DownStairsGameTitleText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         gameTitle.anchor.setTo(Config.GameTitlePos.Anchor.X, Config.GameTitlePos.Anchor.Y);
         this.gameTitle = gameTitle;
 
         // 建立 Play 1P 按鈕
-        let play1PBtn = game.add.text(
+        let play1PBtn = game.add.bitmapText(
             Config.Play1PBtnPos.X,
             Config.Play1PBtnPos.Y,
-            this.Dict.Play1PText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.Play1PText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         play1PBtn.anchor.set(Config.Play1PBtnPos.Anchor.X, Config.Play1PBtnPos.Anchor.Y);
         play1PBtn.inputEnabled = true;
@@ -68,11 +67,12 @@ class MainMenuState extends Phaser.State {
         this.play1PBtn = play1PBtn;
 
         // 建立 Play 2P 按鈕
-        let play2PBtn = game.add.text(
+        let play2PBtn = game.add.bitmapText(
             Config.Play2PBtnPos.X,
             Config.Play2PBtnPos.Y,
-            this.Dict.Play2PText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.Play2PText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         play2PBtn.anchor.setTo(Config.Play2PBtnPos.Anchor.X, Config.Play2PBtnPos.Anchor.Y);
         play2PBtn.inputEnabled = true;
@@ -86,11 +86,12 @@ class MainMenuState extends Phaser.State {
         // 建立 Play Online 按鈕
         //todo: play online feature
         /**
-         let playOnlineBtn = game.add.text(
+         let playOnlineBtn = game.add.bitmapText(
          Config.PlayOnlineBtnPos.X,
          Config.PlayOnlineBtnPos.Y,
-         this.Dict.PlayOnlineText,
-         Config.DefaultFontStyle
+         Config.DollBitmapFontName,
+         I18nUtil.dict.PlayOnlineText,
+         GlobalConst.DefaultBitmapFontStyle.Size
          );
          playOnlineBtn.anchor.setTo(Config.PlayOnlineBtnPos.Anchor.X, Config.PlayOnlineBtnPos.Anchor.Y);
          playOnlineBtn.inputEnabled = true;
@@ -103,11 +104,12 @@ class MainMenuState extends Phaser.State {
          */
 
         // 建立 setting 按鈕
-        let settingBtn = game.add.text(
+        let settingBtn = game.add.bitmapText(
             Config.SettingBtnPos.X,
             Config.SettingBtnPos.Y,
-            this.Dict.SettingText,
-            GlobalConst.PlayBold34FontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.SettingText,
+            GlobalConst.BitmapFont34Style.Size
         );
         settingBtn.anchor.setTo(Config.SettingBtnPos.Anchor.X, Config.SettingBtnPos.Anchor.Y);
         settingBtn.inputEnabled = true;
@@ -134,15 +136,16 @@ class MainMenuState extends Phaser.State {
         );
         this.mainBox = mainBox;
 
-        let followMeOnText = new Phaser.Text(
-            this.game,
+        // 建立 follow me 標誌
+        let followMeText = game.add.bitmapText(
             Config.FollowTextPos.X,
             Config.FollowTextPos.Y,
-            this.Dict.FollowMeOnText,
-            GlobalConst.Play32FontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.FollowMeText,
+            GlobalConst.BitmapFont32Style.Size
         );
-        game.add.existing(followMeOnText);
-        this.followMeOnText = followMeOnText;
+        followMeText.anchor.setTo(Config.FollowTextPos.Anchor.X, Config.FollowTextPos.Anchor.Y);
+        this.followMeText = followMeText;
 
         let fbIcon = game.add.sprite(
             Config.FbIconPos.X,

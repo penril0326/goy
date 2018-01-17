@@ -4,6 +4,7 @@ import * as GlobalConst from "../../../globalconst";
 import Player from "../element/player";
 import LifeBar from  "../block/lifebar";
 import PlayState from "./play";
+import I18nUtil from "../../../util/i18n";
 
 class Play1PState extends PlayState {
     constructor() {
@@ -44,12 +45,13 @@ class Play1PState extends PlayState {
         this.createScrollCounter();
 
         // 加入生命條
-        this.lifeText = new Phaser.Text(
+        this.lifeText = new Phaser.BitmapText(
             this.game,
             Config.LifeTextPos.X,
             Config.LifeTextPos.Y,
-            this.Dict.LifeText,
-            GlobalConst.PlayBold34FontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.LifeText,
+            GlobalConst.BitmapFont34Style.Size
         );
         this.lifeText.anchor.setTo(
             Config.LifeTextPos.Anchor.X,

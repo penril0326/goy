@@ -29,7 +29,7 @@ func Index(writer http.ResponseWriter, request *http.Request) {
             viper.GetString("LangCookieName"),
             c.Lang,
             viper.GetBool("TLS"),
-            true,
+            false,
         )
         http.SetCookie(writer, resultCookie)
     }

@@ -5,6 +5,7 @@ import * as GlobalConst from "../../../globalconst";
 import Player from "../element/player";
 import LifeBar from "../block/lifebar";
 import Container from "../../../block/container";
+import I18nUtil from "../../../util/i18n";
 
 class Play2pState extends PlayState {
     constructor() {
@@ -58,12 +59,13 @@ class Play2pState extends PlayState {
         this.createScrollCounter();
 
         // 加入生命條
-        this.player1LifeText = new Phaser.Text(
+        this.player1LifeText = new Phaser.BitmapText(
             this.game,
             Config.Player1LifeTextPos.X,
             Config.Player1LifeTextPos.Y,
-            this.Dict.SimplePlayer1Text + "-" + this.Dict.LifeText,
-            GlobalConst.PlayBold34FontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.SimplePlayer1Text + "-" + I18nUtil.dict.LifeText,
+            GlobalConst.BitmapFont34Style.Size
         );
         this.player1LifeText.anchor.setTo(
             Config.Player1LifeTextPos.Anchor.X,
@@ -71,12 +73,13 @@ class Play2pState extends PlayState {
         );
         this.game.add.existing(this.player1LifeText);
         this.player1LifeBar = new LifeBar(this.game, Config.Player1LifeBarPos.X, Config.Player1LifeBarPos.Y);
-        this.player2LifeText = new Phaser.Text(
+        this.player2LifeText = new Phaser.BitmapText(
             this.game,
             Config.Player2LifeTextPos.X,
             Config.Player2LifeTextPos.Y,
-            this.Dict.SimplePlayer2Text + "-" + this.Dict.LifeText,
-            GlobalConst.PlayBold34FontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.SimplePlayer2Text + "-" + I18nUtil.dict.LifeText,
+            GlobalConst.BitmapFont34Style.Size
         );
         this.player2LifeText.anchor.setTo(
             Config.Player2LifeTextPos.Anchor.X,
@@ -167,12 +170,13 @@ class Play2pState extends PlayState {
         // 遊戲提示文字
         this.hintBox = new Container(this.game);
 
-        let p1ControlText = new Phaser.Text(
+        let p1ControlText = new Phaser.BitmapText(
             this.game,
             Config.HintP1ControlTextPos.X,
             Config.HintP1ControlTextPos.Y,
-            this.Dict.SimplePlayer1Text + " " + this.Dict.ControlText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.SimplePlayer1Text + " " + I18nUtil.dict.ControlText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         p1ControlText.anchor.setTo(
             Config.HintP1ControlTextPos.Anchor.X,
@@ -180,12 +184,13 @@ class Play2pState extends PlayState {
         );
         this.hintBox.addAsset("p1ControlText", p1ControlText);
 
-        let p2ControlText = new Phaser.Text(
+        let p2ControlText = new Phaser.BitmapText(
             this.game,
             Config.HintP2ControlTextPos.X,
             Config.HintP2ControlTextPos.Y,
-            this.Dict.SimplePlayer2Text + " " + this.Dict.ControlText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.SimplePlayer2Text + " " + I18nUtil.dict.ControlText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         p2ControlText.anchor.setTo(
             Config.HintP2ControlTextPos.Anchor.X,

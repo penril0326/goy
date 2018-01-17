@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import Container from "../../../block/container";
 import * as Config from "../config";
 import * as GlobalConst from "../../../globalconst";
-import DictUS from "../../../../dict/us";
 import LedgesRunner from "../block/ledgesrunner";
 import ColorBound01 from "../../../block/colorbound01";
 import ScrollCounter01 from "../../../block/scrollcounter01";
@@ -11,13 +10,11 @@ import PauseMenu from "../block/pausemenu";
 import GameOver from "../block/gameover";
 import Box from "../../../element/box";
 import * as Util from "../util";
+import I18nUtil from "../../../util/i18n";
 
 class PlayState extends Phaser.State {
     constructor() {
         super();
-        // 載入字典檔
-        this.Dict = DictUS;
-
         // key objects
         this.cursors = null;
         this.wasd = null;
@@ -74,9 +71,6 @@ class PlayState extends Phaser.State {
     }
 
     initGame() {
-        // 載入字典檔
-        this.Dict = DictUS;
-
         // 加入自訂的pause功能
         this.game.onPause.add(this.pauseGame, this);
         this.game.onResume.add(this.pauseGame, this);
@@ -112,8 +106,19 @@ class PlayState extends Phaser.State {
         this.game.onResume.removeAll();
 
         // 加入遊戲結束選單
-        this.gameOverMenu = new GameOver(this.game, this.scrollCounter.counts, this.gameoverButtonIputPriority);
+        this.gameOverMenu = new GameOver(
+            this.game,
+            this.scrollCounter.counts,
+            this.gameoverButtonIputPriority,
+            this.recoverGameSetting.bind(this)
+        );
         this.gameOverMenu.showAll();
+    }
+
+    recoverGameSetting() {
+        this.game.time.events.resume();
+        this.game.tweens.resumeAll();
+        this.game.physics.arcade.isPaused = false;
     }
 
     letsPlay() {
@@ -314,8 +319,9 @@ class PlayState extends Phaser.State {
             this.game,
             Config.CountDownTime,
             Config.CountDownSpeed,
-            this.Dict.StartText,
-            GlobalConst.PlayBold200FontStyle,
+            I18nUtil.dict.StartText,
+            Config.DollBitmapFontName,
+            GlobalConst.BitmapFont200Style.Size,
             this.pauseTimer
         );
     }
@@ -324,12 +330,13 @@ class PlayState extends Phaser.State {
         // 遊戲提示文字
         this.hintBox = new Container(this.game);
 
-        let hintText = new Phaser.Text(
+        let hintText = new Phaser.BitmapText(
             this.game,
             Config.HintTextPos.X,
             Config.HintTextPos.Y,
-            this.Dict.PauseHintText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.PauseHintText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         hintText.anchor.setTo(
             Config.HintTextPos.Anchor.X,

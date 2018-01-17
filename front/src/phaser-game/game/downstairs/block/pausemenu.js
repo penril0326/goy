@@ -4,19 +4,16 @@ import Box from "../../../element/box";
 import ToggleButton from "../../../element/togglebutton";
 import Phaser from "phaser";
 import * as Config from "../config";
+import * as GlobalConst from "../../../globalconst";
 import * as Util from "../util";
 import * as GameUtil from "../../../util/game";
 import * as InputUtil from "../../../util/input";
 import * as CookieUtil from "../../../util/cookie";
-import DictUS from "../../../../dict/us";
-
+import I18nUtil from "../../../util/i18n";
 
 class PauseMenu extends Container {
     constructor(game, inputPriority, onContinueCallBack) {
         super(game);
-        // 載入字典檔
-        this.Dict = DictUS;
-
         // 從cookie載入配置設定
         let setting = Util.loadDownstairsGameSetting();
         this.soundSetting = setting.Sounds;
@@ -39,12 +36,13 @@ class PauseMenu extends Container {
         this.addAsset("box", box);
 
         // pause選單的標題
-        let title = new Phaser.Text(
+        let title = new Phaser.BitmapText(
             this.game,
             Config.PauseMenuTitlePos.X,
             Config.PauseMenuTitlePos.Y,
-            this.Dict.PauseText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.PauseText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         title.anchor.setTo(
             Config.PauseMenuTitlePos.Anchor.X,
@@ -82,12 +80,13 @@ class PauseMenu extends Container {
         this.addInput("soundCheckBox", soundCheckBox);
 
         // 建立 continue 按鈕
-        let continueBtn = new Phaser.Text(
+        let continueBtn = new Phaser.BitmapText(
             this.game,
             Config.PauseMenuContinueButtonPos.X,
             Config.PauseMenuContinueButtonPos.Y,
-            this.Dict.ContinueText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.ContinueText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         continueBtn.anchor.setTo(
             Config.PauseMenuContinueButtonPos.Anchor.X,

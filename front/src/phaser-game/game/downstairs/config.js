@@ -5,6 +5,8 @@ import atlas_ledges from "../../../../../front/style/img/downstairs/atlas_ledges
 import atlas_ledges_json from "../../../../../front/style/img/downstairs/atlas_ledges.json";
 import atlas_porkoldman from "../../../../../front/style/img/downstairs/atlas_porkoldman.png";
 import atlas_porkoldman_json from "../../../../../front/style/img/downstairs/atlas_porkoldman.json";
+import bitmap_doll from "../../../../../front/style/font/doll.png";
+import bitmap_doll_fnt from "../../../../../front/style/font/doll.fnt";
 
 //----- for Game -----
 export const PixelScaleRate = 1.0;
@@ -27,8 +29,13 @@ export const CameraCenterPosCenterAnchor = {
     Anchor: GlobalConst.CenterAnchor
 };
 export const DefaultFontStyle = GlobalConst.Play60FontStyle;
-
-
+export const LangSet = {
+    US: "US",
+    TW: "TW",
+    CN: "CN"
+};
+export const DefaultLang = LangSet.US;
+export const GameLangCookieName = "ln";
 export const GameSettingCookieName = "d100_stt";
 export const GameSettingCookieExpiredDay = 30;
 export const DefaultGameSetting = {
@@ -216,6 +223,13 @@ export const MainTextureAtlasKey = {
     Instagram: "instagram.png"
 };
 
+// bitmap font
+export const DollBitmapFontName = "doll";
+export const DollBitmapFontPath = {
+    Texture: bitmap_doll,
+    Atlas: bitmap_doll_fnt
+};
+
 // for assets
 
 // scroll counter
@@ -339,9 +353,9 @@ export const IgIconPos = {
     Anchor: GlobalConst.LeftTopAnchor
 };
 export const FollowTextPos = {
-    X: 500 * PixelScaleRate,
-    Y: 695 * PixelScaleRate,
-    Anchor: GlobalConst.LeftTopAnchor
+    X: 695 * PixelScaleRate,
+    Y: 710 * PixelScaleRate,
+    Anchor: GlobalConst.CenterRightAnchor
 };
 export const FbUrl = "https://www.facebook.com/PorkOldManSayBullShit/";
 export const IgUrl = "https://www.instagram.com/porkoldman555/";

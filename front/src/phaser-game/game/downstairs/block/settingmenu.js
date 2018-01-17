@@ -7,15 +7,12 @@ import * as Config from "../config";
 import * as Util from "../util";
 import * as InputUtil from "../../../util/input";
 import * as CookieUtil from "../../../util/cookie";
-import DictUS from "../../../../dict/us";
-
+import I18nUtil from "../../../util/i18n";
+import * as GlobalConst from "../../../globalconst";
 
 class SettingMenu extends Container {
     constructor(game, inputPriority, closeCallback) {
         super(game);
-        // 依語系載入字典檔
-        this.Dict = DictUS;
-
         // 從cookie載入配置設定
         let setting = Util.loadDownstairsGameSetting();
 
@@ -47,12 +44,13 @@ class SettingMenu extends Container {
         this.addInput("box", box, false);
 
         // setting選單的標題
-        let title = new Phaser.Text(
+        let title = new Phaser.BitmapText(
             this.game,
             Config.SettingMenuTitlePos.X,
             Config.SettingMenuTitlePos.Y,
-            this.Dict.SettingText,
-            Config.DefaultFontStyle
+            Config.DollBitmapFontName,
+            I18nUtil.dict.SettingText,
+            GlobalConst.DefaultBitmapFontStyle.Size
         );
         title.anchor.setTo(
             Config.SettingMenuTitlePos.Anchor.X,

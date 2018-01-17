@@ -61,6 +61,14 @@ class PreloadState extends Phaser.State {
         };
         let scrollCounter = new Phaser.Text(this.game, 0, 0, "0 1 2 3 4 5 6 7 8 9", styles);
         this.game.load.image(Config.ScrollCounterImageName, scrollCounter.generateTexture().getImage().src);
+
+        // 載入 bitmap font
+        this.game.load.bitmapFont(
+            Config.DollBitmapFontName,
+            Config.DollBitmapFontPath.Texture,
+            Config.DollBitmapFontPath.Atlas
+        );
+
         this.game.load.start();
     }
 

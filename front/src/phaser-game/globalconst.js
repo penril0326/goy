@@ -1,3 +1,15 @@
+export const DefaultBitmapFontStyle = {
+    Size: 60
+};
+export const BitmapFont32Style = {
+    Size: 32
+};
+export const BitmapFont34Style = {
+    Size: 34
+};
+export const BitmapFont200Style = {
+    Size: 200
+};
 export const PlayFontLoader = [
     "Play:400,800:latin"
 ];
