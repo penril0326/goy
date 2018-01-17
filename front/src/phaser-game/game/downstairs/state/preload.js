@@ -68,6 +68,11 @@ class PreloadState extends Phaser.State {
             Config.DollBitmapFontPath.Texture,
             Config.DollBitmapFontPath.Atlas
         );
+        this.game.load.bitmapFont(
+            Config.DollBigBitmapFontName,
+            Config.DollBigBitmapFontPath.Texture,
+            Config.DollBigBitmapFontPath.Atlas
+        );
 
         this.game.load.start();
     }

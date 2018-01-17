@@ -320,7 +320,7 @@ class PlayState extends Phaser.State {
             Config.CountDownTime,
             Config.CountDownSpeed,
             I18nUtil.dict.StartText,
-            Config.DollBitmapFontName,
+            Config.DollBigBitmapFontName,
             GlobalConst.BitmapFont200Style.Size,
             this.pauseTimer
         );

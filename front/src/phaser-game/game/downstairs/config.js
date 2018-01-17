@@ -7,6 +7,10 @@ import atlas_porkoldman from "../../../../../front/style/img/downstairs/atlas_po
 import atlas_porkoldman_json from "../../../../../front/style/img/downstairs/atlas_porkoldman.json";
 import bitmap_doll from "../../../../../front/style/font/doll.png";
 import bitmap_doll_fnt from "../../../../../front/style/font/doll.fnt";
+import bitmap_doll_big from "../../../../../front/style/font/doll-big.png";
+import bitmap_doll_big_fnt from "../../../../../front/style/font/doll-big.fnt";
+
+
 
 //----- for Game -----
 export const PixelScaleRate = 1.0;
@@ -228,6 +232,11 @@ export const DollBitmapFontName = "doll";
 export const DollBitmapFontPath = {
     Texture: bitmap_doll,
     Atlas: bitmap_doll_fnt
+};
+export const DollBigBitmapFontName = "doll-big";
+export const DollBigBitmapFontPath = {
+    Texture: bitmap_doll_big,
+    Atlas: bitmap_doll_big_fnt
 };
 
 // for assets
