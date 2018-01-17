@@ -64,6 +64,12 @@ class MainMenuState extends Phaser.State {
         play1PBtn.events.onInputOver.add(GameUtil.scaleBig);
         play1PBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         play1PBtn.input.priorityID = this.mainMenuIputPriority;
+        play1PBtn.hitArea = new Phaser.Rectangle(
+            0 - play1PBtn.offsetX,
+            0 - play1PBtn.offsetY,
+            play1PBtn.width,
+            play1PBtn.height
+        );
         this.play1PBtn = play1PBtn;
 
         // 建立 Play 2P 按鈕
@@ -81,6 +87,12 @@ class MainMenuState extends Phaser.State {
         play2PBtn.events.onInputOver.add(GameUtil.scaleBig);
         play2PBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         play2PBtn.input.priorityID = this.mainMenuIputPriority;
+        play2PBtn.hitArea = new Phaser.Rectangle(
+            0 - play2PBtn.offsetX,
+            0 - play2PBtn.offsetY,
+            play2PBtn.width,
+            play2PBtn.height
+        );
         this.play2PBtn = play2PBtn;
 
         // 建立 Play Online 按鈕
@@ -100,6 +112,12 @@ class MainMenuState extends Phaser.State {
          playOnlineBtn.events.onInputOver.add(Events.scaleBig);
          playOnlineBtn.events.onInputOut.add(Events.scaleOrigin);
          playOnlineBtn.input.priorityID = this.mainMenuIputPriority;
+         playOnlineBtn.hitArea = new Phaser.Rectangle(
+         0 - playOnlineBtn.offsetX,
+         0 - playOnlineBtn.offsetY,
+         playOnlineBtn.width,
+         playOnlineBtn.height
+         );
          this.playOnlineBtn = playOnlineBtn;
          */
 
@@ -118,6 +136,12 @@ class MainMenuState extends Phaser.State {
         settingBtn.events.onInputOver.add(GameUtil.scaleBig);
         settingBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         settingBtn.input.priorityID = this.mainMenuIputPriority;
+        settingBtn.hitArea = new Phaser.Rectangle(
+            0 - settingBtn.offsetX,
+            0 - settingBtn.offsetY,
+            settingBtn.width,
+            settingBtn.height
+        );
         this.settingBtn = settingBtn;
 
         // 建立游戲邊框

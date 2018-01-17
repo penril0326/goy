@@ -97,6 +97,12 @@ class PauseMenu extends Container {
         continueBtn.events.onInputUp.add(this.onContinueClick.bind(this));
         continueBtn.events.onInputOver.add(GameUtil.scaleBig);
         continueBtn.events.onInputOut.add(GameUtil.scaleOrigin);
+        continueBtn.hitArea = new Phaser.Rectangle(
+            0 - continueBtn.offsetX,
+            0 - continueBtn.offsetY,
+            continueBtn.width,
+            continueBtn.height
+        );
         this.addInput("continueBtn", continueBtn);
 
     }
