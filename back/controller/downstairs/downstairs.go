@@ -9,19 +9,10 @@ import (
     "goy/back/model/logger"
     "goy/back/model/i18n"
     "goy/back/model/cookie"
-    "path"
-    "os"
-    "fmt"
 )
 
 func Index(writer http.ResponseWriter, request *http.Request) {
-    wd, err := os.Getwd()
-    if err != nil {
-        panic(fmt.Errorf("Fatal error working directory: %s \n", err))
-    }
-    geodbFile := path.Dir(wd + loader.Json.GetString("RootDir") + "back/external/")
-    geodbFile = geodbFile + "/GeoLite2-Country.mmdb"
-    c, err := client.NewClient(request, geodbFile)
+    c, err := client.NewClient(request)
     if err != nil {
         logger.Write(logger.AppErrorExceptionStatus, err.Error())
         http.Error(writer, "Server Error", http.StatusInternalServerError)

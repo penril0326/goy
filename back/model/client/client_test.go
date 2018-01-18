@@ -3,19 +3,14 @@ package client
 import (
     "testing"
     "net/http/httptest"
-    "os"
-    "path"
 )
 
 func TestClient(t *testing.T) {
-    p, _ := os.Getwd()
-    geoDbDir := path.Dir(p + "../../../external/") + "/"
-    geoDbName := "GeoLite2-Country.mmdb"
     req := httptest.NewRequest("GET", "http://example.com/foo", nil)
     req.Header.Add("Accept-Language", "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6")
     req.Header.Add("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36")
     req.RemoteAddr = "114.25.150.22:16"
-    c, err := NewClient(req, geoDbDir + geoDbName)
+    c, err := NewClient(req)
     if err != nil {
         t.Fatalf("Test ClientManager failed, can't create client, get err: %s", err)
     }

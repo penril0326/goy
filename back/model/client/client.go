@@ -7,6 +7,8 @@ import (
     "github.com/oschwald/geoip2-golang"
     "net"
     "strings"
+    "runtime"
+    "path"
 )
 
 type Client struct {
@@ -21,7 +23,12 @@ type Client struct {
     request        http.Request
 }
 
-func NewClient(req *http.Request, geoDbPath string) (*Client, error) {
+func NewClient(req *http.Request) (*Client, error) {
+    _, filename, _, ok := runtime.Caller(0)
+    if !ok {
+        panic("No caller information")
+    }
+    geoDbPath := path.Dir(filename) + "/GeoLite2-Country.mmdb"
     c := &Client{}
     c.IP = realip.FromRequest(req)
     err := c.initCountry(geoDbPath)
