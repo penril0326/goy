@@ -2,8 +2,8 @@
   "ProjectName": "hello",
   "ExportDir": "./goy-export/",
   "IndexFile": "hello.html",
-  "RootDir": "../../../",
-  "FrontDir": "../../../front/",
-  "TplDir": "../../../front/tpl/",
-  "StyleDir": "../../../front/style/"
+  "RootDir": "./../../../",
+  "FrontDir": "./../../../front/",
+  "TplDir": "./../../../front/tpl/",
+  "StyleDir": "./../../../front/style/"
 }

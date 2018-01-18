@@ -4,21 +4,19 @@ import (
     "fmt"
     "net/http"
     "text/template"
-    "github.com/spf13/viper"
+    "goy/back/model/loader"
     "goy/back/model/tpl_dto"
 )
-
 
 func Index(writer http.ResponseWriter, request *http.Request) {
     type IndexData struct {
         Description string
     }
-
-    indexTemplate := template.New(viper.GetString("IndexFile"))
-    indexTemplate.ParseFiles(viper.GetString("ExportDir") + viper.GetString("IndexFile"))
+    indexTemplate := template.New(loader.Json.GetString("IndexFile"))
+    indexTemplate.ParseFiles(loader.Json.GetString("ExportDir") + loader.Json.GetString("IndexFile"))
     data := tpl_dto.Container{
         Title: "hello!",
-        Data: IndexData {
+        Data: IndexData{
             Description: "Hello World",
         },
     }

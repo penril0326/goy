@@ -55,7 +55,7 @@ this is some info to read!
     if err != nil {
         t.Errorf("Test File.ReadFile failed, read file_for_unit_test.file, get an error: %s", err.Error())
     }
-    if strings.Compare(string(text), expect) !=0 {
+    if strings.Compare(string(text), expect) != 0 {
         t.Errorf("Test File.ReadFile failed, no get expect output")
     }
 }
@@ -77,7 +77,7 @@ text text2`
     if err != nil {
         t.Fatalf("Test File.WriteFile failed in first test, error: %s", err.Error())
     }
-    if strings.Compare(string(content), expect) != 0{
+    if strings.Compare(string(content), expect) != 0 {
         t.Errorf("Test File.WriteFile failed in first test, no get expect output")
     }
 }
@@ -102,10 +102,10 @@ text text2
     if err != nil {
         t.Fatalf("Test File.WriteFile failed in first test, error: %s", err.Error())
     }
-    if strings.Compare(string(content), expect) != 0{
+    if strings.Compare(string(content), expect) != 0 {
         t.Errorf("Test File.WriteFile failed in first test, no get expect output")
     }
-
+    
     //------------second test
     expect = `test text!
 text text2
@@ -119,10 +119,10 @@ another line test
     if err != nil {
         t.Fatalf("Test File.WriteFile failed in second test, error: %s", err.Error())
     }
-    if strings.Compare(string(content), expect) != 0{
+    if strings.Compare(string(content), expect) != 0 {
         t.Errorf("Test File.WriteFile failed in second test, no get expect output")
     }
-
+    
     //------------third test
     expect = `test text!
 text text2
@@ -142,7 +142,7 @@ another line test
     if err != nil {
         t.Fatalf("Test File.WriteFile failed in third test, error: %s", err.Error())
     }
-    if strings.Compare(string(content), expect) != 0{
+    if strings.Compare(string(content), expect) != 0 {
         t.Errorf("Test File.WriteFile failed in third test, no get expect output")
     }
 }

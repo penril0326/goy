@@ -10,10 +10,10 @@ import (
 
 var fileMutex sync.RWMutex
 
-type File struct {}
+type File struct{}
 
 // 檢查檔案是否存在
-func (f *File) IsExist(path string) bool{
+func (f *File) IsExist(path string) bool {
     _, err := os.Stat(path)
     if os.IsNotExist(err) {
         return false
@@ -71,10 +71,10 @@ func (f *File) WriteFile(path string, text string) error {
 func (f *File) DeleteFile(path string) error {
     fileMutex.RLock()
     defer fileMutex.RUnlock()
-
+    
     var err = os.Remove(path)
     if err != nil {
-        return  err
+        return err
     }
     return nil
 }
@@ -83,7 +83,7 @@ func (f *File) DeleteFile(path string) error {
 func (f *File) ReadFile(path string) ([]byte, error) {
     fileMutex.RLock()
     defer fileMutex.RUnlock()
-
+    
     // open file
     var file, err = os.OpenFile(path, os.O_RDWR, 0644)
     if err != nil {
@@ -96,7 +96,7 @@ func (f *File) ReadFile(path string) ([]byte, error) {
         return nil, err
     }
     fileLength := info.Size()
-
+    
     // read file, line by line
     var text = make([]byte, fileLength)
     for {

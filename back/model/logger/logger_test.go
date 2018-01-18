@@ -7,19 +7,20 @@ import (
     "os"
     "goy/back/model/file"
     "strings"
+    "path"
 )
 
-
 func TestAppLog(t *testing.T) {
-    l := NewAppLog()
-    l.RootPath = l.RootPath + "unitest/"
+    p, _ := os.Getwd()
+    logDir := path.Dir(p + "../../../log/unitest/") + "/"
+    l := NewAppLog(logDir)
     err := createTestFiles(l.RootPath)
     defer removeTestFiles(l.RootPath)
     if err != nil {
         t.Fatalf("Test AppLog failed, get error: %s", err.Error())
     }
     f := file.File{}
-
+    
     //---------- info test
     fileName := l.getLogFileName(AppErrorInfoStatus)
     err = l.WriteLog(AppErrorInfoStatus, "this is a log text for info testing.")
@@ -35,7 +36,7 @@ func TestAppLog(t *testing.T) {
     if strings.Compare(string(data), expect) != 0 {
         t.Errorf("Test AppLog.WriteLog failed in info test, no get expect output")
     }
-
+    
     //---------- debug test
     fileName = l.getLogFileName(AppErrorDebugStatus)
     err = l.WriteLog(AppErrorDebugStatus, "this is a log text for debug testing.")
@@ -51,7 +52,7 @@ func TestAppLog(t *testing.T) {
     if strings.Compare(string(data), expect) != 0 {
         t.Errorf("Test AppLog.WriteLog failed in debug test, no get expect output")
     }
-
+    
     //---------- exception test
     fileName = l.getLogFileName(AppErrorExceptionStatus)
     err = l.WriteLog(AppErrorExceptionStatus, "this is a log text for exception testing.")
@@ -67,7 +68,7 @@ func TestAppLog(t *testing.T) {
     if strings.Compare(string(data), expect) != 0 {
         t.Errorf("Test AppLog.WriteLog failed in exception test, no get expect output")
     }
-
+    
     //---------- alert test
     fileName = l.getLogFileName(AppErrorAlertStatus)
     err = l.WriteLog(AppErrorAlertStatus, "this is a log text for alert testing.")
@@ -83,7 +84,7 @@ func TestAppLog(t *testing.T) {
     if strings.Compare(string(data), expect) != 0 {
         t.Errorf("Test AppLog.WriteLog failed in alert test, no get expect output")
     }
-
+    
     //---------- invalid status name test
     fileName = l.getLogFileName(AppErrorInfoStatus)
     err = l.WriteLog("invalid status", "this is a log text for invalid status testing.")
@@ -111,7 +112,7 @@ func createTestFiles(path string) error {
     }
     infoPath := path + "info/"
     if _, err := os.Stat(infoPath); os.IsNotExist(err) {
-        err =os.MkdirAll(infoPath, os.FileMode(0755))
+        err = os.MkdirAll(infoPath, os.FileMode(0755))
         if err != nil {
             return err
         }
@@ -144,7 +145,6 @@ func removeTestFiles(path string) {
     os.RemoveAll(path)
 }
 
-
 func TestAppError(t *testing.T) {
     //-------------normal test
     appError := NewAppError(AppErrorExceptionStatus, "It is a test for exception error")
@@ -163,14 +163,14 @@ func TestAppError(t *testing.T) {
     if object.Summary != "It is a test for exception error" {
         t.Errorf("Test AppError.Error failed, no get expect summary")
     }
-
+    
     //-------------empty test
     empty := AppError{}
     appError = &AppError{}
     object = AppError{}
     errorString, err = appError.Error()
     err = json.Unmarshal([]byte(errorString), &object)
-    if  fmt.Sprintf("%s", object) != fmt.Sprintf("%s", empty){
+    if fmt.Sprintf("%s", object) != fmt.Sprintf("%s", empty) {
         t.Errorf("Test AppError.Error failed in empty test, no get expect output")
     }
 }

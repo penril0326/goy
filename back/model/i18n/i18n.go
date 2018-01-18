@@ -37,6 +37,6 @@ func IsValidLangCode(lang string) bool {
 
 // 字典檔key的紀錄
 const (
-    NoSupportMobile = "NoSupportMobile"
+    NoSupportMobile     = "NoSupportMobile"
     GameNoSupportMobile = "GameNoSupportMobile"
 )

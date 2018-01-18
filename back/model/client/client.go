@@ -2,38 +2,29 @@ package client
 
 import (
     "net/http"
-    "porkoldman/core/middleware/realip"
+    "goy/back/model/realip"
     "github.com/mssola/user_agent"
     "github.com/oschwald/geoip2-golang"
     "net"
-    "path"
-    "os"
-    "go/build"
     "strings"
 )
 
 type Client struct {
-    IP string
-    Country string
-    IsoCode string
-    Lang string
-    Device string
-    Browser string
+    IP             string
+    Country        string
+    IsoCode        string
+    Lang           string
+    Device         string
+    Browser        string
     BrowserVersion string
-    IsUseMobile bool
-    request http.Request
+    IsUseMobile    bool
+    request        http.Request
 }
 
-func NewClient(req *http.Request) (*Client, error) {
-    gopath := os.Getenv("GOPATH")
-    if gopath == "" {
-        gopath = build.Default.GOPATH
-    }
-    geoDbDir := path.Dir(gopath + "/src/goy/back/external/") + "/"
-    geoDbName := "GeoLite2-Country.mmdb"
+func NewClient(req *http.Request, geoDbPath string) (*Client, error) {
     c := &Client{}
     c.IP = realip.FromRequest(req)
-    err := c.initCountry(geoDbDir + geoDbName)
+    err := c.initCountry(geoDbPath)
     if err != nil {
         return nil, err
     }

@@ -7,16 +7,17 @@ import (
     "bytes"
     "time"
     "goy/back/model/file"
-    "os"
-    "path"
-    "go/build"
 )
+
 const (
-    AppErrorDebugStatus = "debug"
-    AppErrorInfoStatus = "info"
+    AppErrorDebugStatus     = "debug"
+    AppErrorInfoStatus      = "info"
     AppErrorExceptionStatus = "exception"
-    AppErrorAlertStatus = "alert"
+    AppErrorAlertStatus     = "alert"
 )
+
+var Path = ""
+
 // 撰寫log的api函式，用法: logger.Write("debug", "it is a summary for example")
 func Write(status, summary string) {
     appError := NewAppError(status, summary)
@@ -26,10 +27,10 @@ func Write(status, summary string) {
 // 撰寫log
 func writeLog(appError *AppError) {
     if isValidStatus(appError.Status) == false {
-        appError = NewAppError(AppErrorExceptionStatus, "write log with invalid status: " + appError.Status)
+        appError = NewAppError(AppErrorExceptionStatus, "write log with invalid status: "+appError.Status)
     }
     status := appError.Status
-    logger := NewAppLog()
+    logger := NewAppLog(Path)
     appErrorString, err := appError.Error()
     if err != nil {
         logger.WriteLog(status, err.Error())
@@ -39,7 +40,7 @@ func writeLog(appError *AppError) {
 }
 
 // 檢查是否為合法的狀態碼
-func isValidStatus(status string) bool{
+func isValidStatus(status string) bool {
     if status != AppErrorDebugStatus && status != AppErrorInfoStatus &&
         status != AppErrorExceptionStatus && status != AppErrorAlertStatus {
         return false
@@ -53,19 +54,14 @@ type AppLog struct {
 }
 
 // 創建一個 AppLog 物件，並自動設定log檔存放目錄
-func NewAppLog() *AppLog {
-    gopath := os.Getenv("GOPATH")
-    if gopath == "" {
-        gopath = build.Default.GOPATH
-    }
-    logpath := path.Dir(gopath + "/src/goy/back/log/") + "/"
+func NewAppLog(logpath string) *AppLog {
     l := &AppLog{}
     l.RootPath = logpath
     return l
 }
 
 // 撰寫log到檔案裡面
-func (l *AppLog) WriteLog(status, data string) error{
+func (l *AppLog) WriteLog(status, data string) error {
     f := &file.File{}
     switch status {
     case AppErrorDebugStatus:
@@ -108,10 +104,10 @@ func (l *AppLog) getLogFileName(status string) string {
 
 // 類別 AppError 整理並紀錄完善的錯誤訊息，以供後續查看
 type AppError struct {
-    Time string
-    Status string
+    Time    string
+    Status  string
     Summary string
-    Trace string
+    Trace   string
 }
 
 // 新增一AppError物件，此物件會解析使用者的request，並記錄相關資料
@@ -128,9 +124,9 @@ func NewAppError(status string, summary string) *AppError {
 }
 
 // 取得錯誤訊息
-func (e *AppError) Error() (string, error){
+func (e *AppError) Error() (string, error) {
     s, err := e.getString()
-    if err !=nil {
+    if err != nil {
         return "", err
     }
     return fmt.Sprintf("%s", s), nil
@@ -139,7 +135,7 @@ func (e *AppError) Error() (string, error){
 // 將錯誤資料整理成json字串
 func (e *AppError) getString() (string, error) {
     result, err := json.Marshal(e)
-    if err !=nil {
+    if err != nil {
         return "", err
     }
     return fmt.Sprintf("%s", result), nil

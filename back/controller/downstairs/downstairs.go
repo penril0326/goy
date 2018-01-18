@@ -3,18 +3,27 @@ package downstairs
 import (
     "net/http"
     "text/template"
-    "github.com/spf13/viper"
+    "goy/back/model/loader"
     "goy/back/model/tpl_dto"
     "goy/back/model/client"
     "goy/back/model/logger"
     "goy/back/model/i18n"
     "goy/back/model/cookie"
+    "path"
+    "os"
+    "fmt"
 )
 
 func Index(writer http.ResponseWriter, request *http.Request) {
-    c, err := client.NewClient(request)
+    wd, err := os.Getwd()
     if err != nil {
-        logger.Write(logger.AppErrorExceptionStatus, "test error")
+        panic(fmt.Errorf("Fatal error working directory: %s \n", err))
+    }
+    geodbFile := path.Dir(wd + loader.Json.GetString("RootDir") + "back/external/")
+    geodbFile = geodbFile + "/GeoLite2-Country.mmdb"
+    c, err := client.NewClient(request, geodbFile)
+    if err != nil {
+        logger.Write(logger.AppErrorExceptionStatus, err.Error())
         http.Error(writer, "Server Error", http.StatusInternalServerError)
         return
     }
@@ -23,22 +32,22 @@ func Index(writer http.ResponseWriter, request *http.Request) {
         http.Error(writer, i18n.Dict[i18n.GameNoSupportMobile], http.StatusServiceUnavailable)
         return
     }
-    langCookie, err := request.Cookie(viper.GetString("LangCookieName"))
+    langCookie, err := request.Cookie(loader.Json.GetString("LangCookieName"))
     if err == http.ErrNoCookie || (!i18n.IsValidLangCode(langCookie.Value)) {
         resultCookie := cookie.NewDefault(
-            viper.GetString("LangCookieName"),
+            loader.Json.GetString("LangCookieName"),
             c.Lang,
-            viper.GetBool("TLS"),
+            loader.Json.GetBool("TLS"),
             false,
         )
         http.SetCookie(writer, resultCookie)
     }
-
-    indexTemplate := template.New(viper.GetString("IndexFile"))
-    indexTemplate.ParseFiles(viper.GetString("ExportDir") + viper.GetString("IndexFile"))
+    
+    indexTemplate := template.New(loader.Json.GetString("IndexFile"))
+    indexTemplate.ParseFiles(loader.Json.GetString("ExportDir") + loader.Json.GetString("IndexFile"))
     data := tpl_dto.Container{
         Title: "Downstairs",
-        Data: "",
+        Data:  "",
     }
     err = indexTemplate.Execute(writer, data)
     if err != nil {

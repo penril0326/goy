@@ -1,6 +1,6 @@
 let path = require("path");
 let webpack = require("webpack");
-let CleanWebpackPlugin = require('clean-webpack-plugin');
+let CleanWebpackPlugin = require("clean-webpack-plugin");
 let HtmlWebpackPlugin = require("html-webpack-plugin");
 
 // Phaser webpack config
@@ -52,13 +52,13 @@ module.exports = {
     ],
     module: {
         rules: [
-            { test: /\.js$/, use: ["babel-loader"], include: path.join(__dirname, "./") },
-            { test: /pixi\.js/, use: ["expose-loader?PIXI"] },
-            { test: /phaser-split\.js$/, use: ["expose-loader?Phaser"] },
-            { test: /p2\.js/, use: ["expose-loader?p2"] },
-            { test: /\.css$/, use: [ 'style-loader', 'css-loader']},
+            {test: /\.js$/, use: ["babel-loader"], include: path.join(__dirname, "./")},
+            {test: /pixi\.js/, use: ["expose-loader?PIXI"]},
+            {test: /phaser-split\.js$/, use: ["expose-loader?Phaser"]},
+            {test: /p2\.js/, use: ["expose-loader?p2"]},
+            {test: /\.css$/, use: ["style-loader", "css-loader"]},
             // img的輸出路徑 (相對於output.path)
-            { test: /\.(png|jpg|gif|json)$/, use: [{loader: 'file-loader', options: { outputPath: "../img/" }}] }
+            {test: /\.(png|jpg|gif|json)$/, use: [{loader: "file-loader", options: {outputPath: "../img/"}}]}
         ]
     },
     node: {

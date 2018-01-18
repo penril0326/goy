@@ -4,16 +4,14 @@ import (
     "log"
     "fmt"
     "net/http"
-    "github.com/spf13/viper"
+    "goy/back/model/loader"
     "goy/back/controller/hello"
     "github.com/gorilla/mux"
 )
 
 func main() {
     // 讀取全域設定檔
-    viper.SetConfigName("config")
-    viper.AddConfigPath("./")
-    err := viper.ReadInConfig()
+    err := loader.Json.Load("config.json")
     if err != nil {
         panic(fmt.Errorf("Fatal error config file: %s \n", err))
     }
@@ -25,7 +23,7 @@ func main() {
             "/assets",
             http.FileServer(
                 http.Dir(
-                    viper.GetString("ExportDir") + "assets/",
+                    loader.Json.GetString("ExportDir") + "assets/",
                 ),
             ),
         ),

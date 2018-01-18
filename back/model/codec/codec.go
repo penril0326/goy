@@ -27,11 +27,11 @@ type Serializer interface {
 
 // 取得一AesCodec的物件。
 func NewAesCodec(key string) *AesCodec {
-    if len(key) % aes.BlockSize != 0 {
+    if len(key)%aes.BlockSize != 0 {
         key = string(AutoAddPadding([]byte(key), "="))
     }
     return &AesCodec{
-        Key: key,
+        Key:     key,
         Padding: "=",
         Encoder: &GobEncoder{},
     }
@@ -39,7 +39,7 @@ func NewAesCodec(key string) *AesCodec {
 
 // 類別AesCodec，使用AES CBC來做資料的加解密
 type AesCodec struct {
-    Key string
+    Key     string
     Padding string
     Encoder Serializer
 }
@@ -50,19 +50,19 @@ func (c *AesCodec) Encode(value interface{}) (string, error) {
     if value == nil || value == empty {
         return "", errors.New("aes encode error, nil value input")
     }
-
+    
     b, err := c.Encoder.Serialize(value)
     if err != nil {
         return "", err
     }
-    if len(b) % aes.BlockSize != 0 {
+    if len(b)%aes.BlockSize != 0 {
         b = AutoAddPadding(b, c.Padding)
     }
     block, err := aes.NewCipher([]byte(c.Key))
     if err != nil {
         return "", err
     }
-    cipherText := make([]byte, aes.BlockSize + len(b))
+    cipherText := make([]byte, aes.BlockSize+len(b))
     iniVector := cipherText[:aes.BlockSize]
     if _, err := io.ReadFull(rand.Reader, iniVector); err != nil {
         return "", err
@@ -75,35 +75,35 @@ func (c *AesCodec) Encode(value interface{}) (string, error) {
 // 執行AES的CBC解密
 func (c *AesCodec) Decode(value string, dst interface{}) error {
     var empty interface{}
-    if dst ==nil || dst == empty {
+    if dst == nil || dst == empty {
         return errors.New("aes decode error, nil dst input")
     }
     if value == "" {
         return errors.New("aes decode error, empty value input")
     }
-
+    
     cipherText, err := hex.DecodeString(value)
     if err != nil {
         return err
     }
-
+    
     block, err := aes.NewCipher([]byte(c.Key))
     if err != nil {
         return err
     }
-
+    
     if len(cipherText) < aes.BlockSize {
         return err
     }
     iniVector := cipherText[:aes.BlockSize]
     cipherText = cipherText[aes.BlockSize:]
-
-    if len(cipherText) % aes.BlockSize != 0 {
+    
+    if len(cipherText)%aes.BlockSize != 0 {
         return err
     }
     cbcMode := cipher.NewCBCDecrypter(block, iniVector)
     cbcMode.CryptBlocks(cipherText, cipherText)
-
+    
     serializeString := strings.TrimRight(fmt.Sprintf("%s", cipherText), c.Padding)
     err = c.Encoder.Deserialize([]byte(serializeString), dst)
     if err != nil {
@@ -113,10 +113,10 @@ func (c *AesCodec) Decode(value string, dst interface{}) error {
 }
 
 // 自動填充，將明文字串填充至可被AES CBC加解密的size
-func AutoAddPadding(b []byte, padding string) []byte{
+func AutoAddPadding(b []byte, padding string) []byte {
     s := string(b)
     for {
-        if len(s) % aes.BlockSize != 0 {
+        if len(s)%aes.BlockSize != 0 {
             s = s + string(padding)
         } else {
             break
@@ -131,7 +131,7 @@ type GobEncoder struct{}
 // 使用gob將輸入的物件或資料序列化
 func (e *GobEncoder) Serialize(src interface{}) ([]byte, error) {
     var empty interface{}
-    if src == nil || src == empty{
+    if src == nil || src == empty {
         return nil, errors.New("gob encode error, nil src input")
     }
     buf := new(bytes.Buffer)
@@ -145,7 +145,7 @@ func (e *GobEncoder) Serialize(src interface{}) ([]byte, error) {
 // 使用gob將序列化後的資料還原成原始物件或資料
 func (e *GobEncoder) Deserialize(src []byte, dst interface{}) error {
     var empty interface{}
-    if dst ==nil || dst == empty {
+    if dst == nil || dst == empty {
         return errors.New("gob decode error, nil dst input")
     }
     if src == nil {

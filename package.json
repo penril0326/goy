@@ -4,7 +4,9 @@
   "description": "It is a framework use go and javascript to build multiple services.",
   "scripts": {
     "hello-local": "webpack --config app/hello/webpack.local.config.js",
-    "downstairs-local": "webpack --config app/downstairs/webpack.local.config.js"
+    "downstairs-local": "webpack --config app/downstairs/webpack.local.config.js",
+    "downstairs-testing": "webpack --config app/downstairs/webpack.testing.config.js",
+    "downstairs-deploy": "webpack --config app/downstairs/webpack.deploy.config.js"
   },
   "repository": {
     "type": "git",

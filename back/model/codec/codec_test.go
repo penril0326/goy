@@ -6,8 +6,8 @@ import (
 )
 
 type Object struct {
-    P *People
-    H *Home
+    P    *People
+    H    *Home
     Name string
 }
 
@@ -17,8 +17,8 @@ type Home struct {
 }
 
 type People struct {
-    X string
-    Y string
+    X    string
+    Y    string
     Name string
 }
 
@@ -28,17 +28,17 @@ func TestAesCodec(t *testing.T) {
         Y: "14",
     }
     p := &People{
-        X: "123",
-        Y: "321",
+        X:    "123",
+        Y:    "321",
         Name: "Mike",
     }
     o := &Object{
-        P: p,
-        H: h,
+        P:    p,
+        H:    h,
         Name: "Mike's Object",
     }
     a := NewAesCodec("1234567890abcdef1234567890");
-    result ,err := a.Encode(o)
+    result, err := a.Encode(o)
     if err != nil {
         t.Errorf("Test FileHandler.AesCbcCodec failed, get error: %s", err.Error())
     }
@@ -57,7 +57,7 @@ func TestAesCodec(t *testing.T) {
     if reflect.DeepEqual(dst.H, h) != true {
         t.Errorf("Test FileHandler.AesCbcCodec failed, no get expect output")
     }
-
+    
     fakeDst := &Home{}
     err = a2.Decode(result, fakeDst)
     if err == nil {
@@ -71,7 +71,7 @@ func TestAesCodec(t *testing.T) {
     if err == nil {
         t.Errorf("Test FileHandler.AesCbcCodec failed, invlaid input, but no get error")
     }
-    _ , err = a.Encode(nil)
+    _, err = a.Encode(nil)
     if err == nil {
         t.Errorf("Test FileHandler.AesCbcCodec failed, nil input, but no get error")
     }
@@ -83,13 +83,13 @@ func TestGobEncoder(t *testing.T) {
         Y: "14",
     }
     p := &People{
-        X: "123",
-        Y: "321",
+        X:    "123",
+        Y:    "321",
         Name: "Mike",
     }
     o := &Object{
-        P: p,
-        H: h,
+        P:    p,
+        H:    h,
         Name: "Mike's Object",
     }
     dst := &Object{}

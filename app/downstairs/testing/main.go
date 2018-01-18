@@ -2,14 +2,14 @@ package main
 
 import (
     "log"
+    "goy/back/model/loader"
     "fmt"
     "github.com/gorilla/mux"
     "goy/back/controller/downstairs"
-    "goy/back/model/loader"
-    "net/http"
-    "os"
     "goy/back/model/logger"
+    "net/http"
     "path"
+    "os"
 )
 
 func main() {

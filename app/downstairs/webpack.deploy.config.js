@@ -10,7 +10,7 @@ let pixi = path.join(phaserModule, "build/custom/pixi.js");
 let p2 = path.join(phaserModule, "build/custom/p2.js");
 
 let definePlugin = new webpack.DefinePlugin({
-    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || "true"))
+    __DEV__: JSON.stringify(JSON.parse(process.env.BUILD_DEV || "false"))
 });
 
 module.exports = {
@@ -19,45 +19,64 @@ module.exports = {
             "babel-polyfill",
             path.resolve(__dirname, "index.js")
         ],
+        vendor: ["pixi", "p2", "phaser", "webfontloader"]
     },
-    devtool: "cheap-source-map",
     output: {
         pathinfo: true,
-        // js輸出位置
-        path: path.resolve(__dirname, "local/goy-export/assets/js/"),
-        // output html載入js的路徑
+        path: path.resolve(__dirname, "deploy/goy-export/assets/js/"),
         publicPath: "/assets/js/",
         filename: "downstairs.js"
     },
     plugins: [
         definePlugin,
-        new CleanWebpackPlugin(["local/goy-export/"]),
-        new HtmlWebpackPlugin({
-            // html的輸出路徑 (相對於output.path)
-            filename: "../../downstairs.html",
-            // html樣本路徑 (相對於根目錄)
-            template: "front/tpl/container.html",
-            minify: {
-                removeAttributeQuotes: false,
-                collapseWhitespace: false,
-                html5: false,
-                minifyCSS: false,
-                minifyJS: false,
-                minifyURLs: false,
-                removeComments: false,
-                removeEmptyAttributes: false
+        new CleanWebpackPlugin(["deploy/goy-export/"]),
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                drop_console: true,
+                screw_ie8: true,
+                warnings: false
             },
-            hash: false
+            mangle: {
+                screw_ie8: true
+            },
+            output: {
+                comments: false,
+                screw_ie8: true
+            }
+        }),
+        new webpack.optimize.CommonsChunkPlugin({name: "vendor", filename: "core.js"}),
+        new HtmlWebpackPlugin({
+            filename: "../../downstairs.html",
+            template: "front/tpl/container.html",
+            chunks: ["vendor", "app"],
+            chunksSortMode: "manual",
+            minify: {
+                removeAttributeQuotes: true,
+                collapseWhitespace: true,
+                html5: true,
+                minifyCSS: true,
+                minifyJS: true,
+                minifyURLs: true,
+                removeComments: true,
+                removeEmptyAttributes: true
+            },
+            hash: true
         })
     ],
     module: {
         rules: [
-            {test: /\.js$/, use: ["babel-loader"], include: path.join(__dirname, "./")},
+            {
+                test: /\.js$/,
+                use: ["babel-loader"],
+                include: [path.join(__dirname, "./"), path.join(__dirname, "../../front/src")]
+            },
             {test: /pixi\.js/, use: ["expose-loader?PIXI"]},
             {test: /phaser-split\.js$/, use: ["expose-loader?Phaser"]},
             {test: /p2\.js/, use: ["expose-loader?p2"]},
             {test: /\.css$/, use: ["style-loader", "css-loader"]},
-            // img的輸出路徑 (相對於output.path)
             {test: /\.(png|jpg|gif|json)$/, use: [{loader: "file-loader", options: {outputPath: "../img/"}}]},
             {test: /\.(fnt)$/, use: [{loader: "file-loader", options: {outputPath: "../font/"}}]}
         ]

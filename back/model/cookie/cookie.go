@@ -7,7 +7,7 @@ import (
 
 // 產生一組cookie物件
 func NewCookie(name, value, path, domain string, maxAge int, secure, httpOnly bool) *http.Cookie {
-    cookie := &http.Cookie {
+    cookie := &http.Cookie{
         Name:     name,
         Value:    value,
         Path:     path,
@@ -26,7 +26,7 @@ func NewCookie(name, value, path, domain string, maxAge int, secure, httpOnly bo
 }
 
 func NewDefault(name, value string, secure, httpOnly bool) *http.Cookie {
-    cookie := &http.Cookie {
+    cookie := &http.Cookie{
         Name:     name,
         Value:    value,
         MaxAge:   86400 * 30,
@@ -37,7 +37,7 @@ func NewDefault(name, value string, secure, httpOnly bool) *http.Cookie {
 }
 
 // 從server刪除client端的一組cookie
-func DeleteCookie (writer http.ResponseWriter, name string) {
+func DeleteCookie(writer http.ResponseWriter, name string) {
     cookie := NewCookie(name, "", "", "",
         -1, false, true)
     http.SetCookie(writer, cookie)
