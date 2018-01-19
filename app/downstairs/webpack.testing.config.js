@@ -32,7 +32,6 @@ module.exports = {
         new CleanWebpackPlugin(["testing/goy-export/"]),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.optimize.DedupePlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 drop_console: true,
