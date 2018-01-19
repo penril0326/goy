@@ -77,7 +77,8 @@ module.exports = {
             {test: /p2\.js/, use: ["expose-loader?p2"]},
             {test: /\.css$/, use: ["style-loader", "css-loader"]},
             {test: /\.(png|jpg|gif|json)$/, use: [{loader: "file-loader", options: {outputPath: "../img/"}}]},
-            {test: /\.(fnt)$/, use: [{loader: "file-loader", options: {outputPath: "../font/"}}]}
+            {test: /\.(fnt)$/, use: [{loader: "file-loader", options: {outputPath: "../font/"}}]},
+            {test: /favicon\.ico$/, use: [{loader: "file-loader", options: {name: "favicon.ico", outputPath: "../img/"}}]}
         ]
     },
     node: {

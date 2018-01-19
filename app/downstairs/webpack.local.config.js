@@ -59,7 +59,8 @@ module.exports = {
             {test: /\.css$/, use: ["style-loader", "css-loader"]},
             // img的輸出路徑 (相對於output.path)
             {test: /\.(png|jpg|gif|json)$/, use: [{loader: "file-loader", options: {outputPath: "../img/"}}]},
-            {test: /\.(fnt)$/, use: [{loader: "file-loader", options: {outputPath: "../font/"}}]}
+            {test: /\.(fnt)$/, use: [{loader: "file-loader", options: {outputPath: "../font/"}}]},
+            {test: /favicon\.ico$/, use: [{loader: "file-loader", options: {name: "favicon.ico", outputPath: "../img/"}}]}
         ]
     },
     node: {
