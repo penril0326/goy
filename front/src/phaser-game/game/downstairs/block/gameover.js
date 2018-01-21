@@ -8,7 +8,7 @@ import * as InputUtil from "../../../util/input";
 import * as GameUtil from "../../../util/game";
 import I18nUtil from "../../../util/i18n";
 import * as GlobalConst from "../../../globalconst";
-
+import * as Sounds from "../sounds";
 
 class GameOver extends Container {
     constructor(game, scoresNumber, inputPriority, callback) {
@@ -92,6 +92,7 @@ class GameOver extends Container {
         continueBtn.inputEnabled = true;
         continueBtn.input.priorityID = this.inputPriority;
         continueBtn.events.onInputUp.add(this.onContinueClick.bind(this));
+        continueBtn.events.onInputDown.add(Sounds.playClick);
         continueBtn.events.onInputOver.add(GameUtil.scaleBig);
         continueBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         continueBtn.hitArea = new Phaser.Rectangle(

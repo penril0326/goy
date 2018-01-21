@@ -11,6 +11,7 @@ import GameOver from "../block/gameover";
 import Box from "../../../element/box";
 import * as Util from "../util";
 import I18nUtil from "../../../util/i18n";
+import * as Sounds from "../sounds";
 
 class PlayState extends Phaser.State {
     constructor() {
@@ -88,6 +89,8 @@ class PlayState extends Phaser.State {
         this.gameTimer = this.game.time.events;
         this.pauseTimer = this.game.time.create(false);
         this.pauseTimer.start();
+        this.overTimer = this.game.time.create(false);
+        this.overTimer.start();
     }
 
     startGame() {
@@ -102,20 +105,29 @@ class PlayState extends Phaser.State {
     endGame() {
         this.isGameOver = true;
         this.pauseGame();
-        this.game.onPause.removeAll();
-        this.game.onResume.removeAll();
-
-        // 加入遊戲結束選單
-        this.gameOverMenu = new GameOver(
-            this.game,
-            this.scrollCounter.counts,
-            this.gameoverButtonIputPriority,
-            this.recoverGameSetting.bind(this)
-        );
-        this.gameOverMenu.showAll();
+        let t = Phaser.Timer.SECOND * 2;
+        let setting = Util.loadDownstairsGameSetting();
+        if (!setting.Sounds) {
+            t = Phaser.Timer.SECOND * 0.3;
+        }
+        this.overTimer.add(t, () => {
+            Sounds.playOver();
+            // 加入遊戲結束選單
+            this.gameOverMenu = new GameOver(
+                this.game,
+                this.scrollCounter.counts,
+                this.gameoverButtonIputPriority,
+                this.recoverGameSetting.bind(this)
+            );
+            this.gameOverMenu.showAll();
+        });
     }
 
     recoverGameSetting() {
+        this.pauseTimer.destroy();
+        this.overTimer.destroy();
+        this.game.onPause.removeAll();
+        this.game.onResume.removeAll();
         this.game.time.events.resume();
         this.game.tweens.resumeAll();
         this.game.physics.arcade.isPaused = false;
@@ -179,6 +191,7 @@ class PlayState extends Phaser.State {
         if (player.bottom > Config.CameraHeight) {
             player.dead();
             lifebar.addLife(-lifebar.maxLife);
+            Sounds.playScream();
             return;
         }
 
@@ -203,6 +216,11 @@ class PlayState extends Phaser.State {
                 player.hurt();
                 player.showHurtEffect();
                 lifebar.addLife(-4);
+                if (lifebar.life <= 0) {
+                    Sounds.playScream();
+                } else {
+                    Sounds.playHurt();
+                }
             }
         }
         if (isPlayerCollideLedges === false) {
@@ -372,6 +390,27 @@ class PlayState extends Phaser.State {
                     player.showHurtEffect();
                 } else {
                     playerLifeBar.addLife(1);
+                }
+                switch (ledge.name) {
+                case Config.LedgeTypes.Normal:
+                    Sounds.playHitGround();
+                    break;
+                case Config.LedgeTypes.Right:
+                case Config.LedgeTypes.Left:
+                    Sounds.playHitIron();
+                    break;
+                case Config.LedgeTypes.Thorn:
+                    if (playerLifeBar.life <= 0) {
+                        Sounds.playScream();
+                    } else {
+                        Sounds.playHurt();
+                    }
+                    break;
+                case Config.LedgeTypes.Sand:
+                    Sounds.playSandFall();
+                    break;
+                case Config.LedgeTypes.Jump:
+                    Sounds.playJump();
                 }
             }
             player.speedBouns = 0;

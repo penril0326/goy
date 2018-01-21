@@ -10,6 +10,7 @@ import * as GameUtil from "../../../util/game";
 import * as InputUtil from "../../../util/input";
 import * as CookieUtil from "../../../util/cookie";
 import I18nUtil from "../../../util/i18n";
+import * as Sounds from "../sounds";
 
 class PauseMenu extends Container {
     constructor(game, inputPriority, onContinueCallBack) {
@@ -77,6 +78,7 @@ class PauseMenu extends Container {
             Config.MainTextureAtlasKey.CheckBox2
         );
         soundCheckBox.input.priorityID = this.inputPriority;
+        soundCheckBox.onInputDown.add(Sounds.playClick);
         this.addInput("soundCheckBox", soundCheckBox);
 
         // 建立 continue 按鈕
@@ -95,6 +97,7 @@ class PauseMenu extends Container {
         continueBtn.inputEnabled = true;
         continueBtn.input.priorityID = this.inputPriority;
         continueBtn.events.onInputUp.add(this.onContinueClick.bind(this));
+        continueBtn.events.onInputDown.add(Sounds.playClick);
         continueBtn.events.onInputOver.add(GameUtil.scaleBig);
         continueBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         continueBtn.hitArea = new Phaser.Rectangle(
