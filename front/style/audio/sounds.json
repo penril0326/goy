@@ -1,0 +1,48 @@
+{
+  "resources": [
+    "sounds.ogg",
+    "sounds.mp3"
+  ],
+  "spritemap": {
+    "click": {
+      "start": 0,
+      "end": 0.1436734693877551,
+      "loop": false
+    },
+    "hitground": {
+      "start": 2,
+      "end": 2.1175510204081633,
+      "loop": false
+    },
+    "hitiron": {
+      "start": 4,
+      "end": 4.145124716553288,
+      "loop": false
+    },
+    "hurt": {
+      "start": 6,
+      "end": 6.417959183673469,
+      "loop": false
+    },
+    "jump": {
+      "start": 8,
+      "end": 8.392018140589569,
+      "loop": false
+    },
+    "over": {
+      "start": 10,
+      "end": 11.008616780045351,
+      "loop": false
+    },
+    "sandfall": {
+      "start": 13,
+      "end": 13.994104308390023,
+      "loop": false
+    },
+    "scream": {
+      "start": 15,
+      "end": 16.94031746031746,
+      "loop": false
+    }
+  }
+}

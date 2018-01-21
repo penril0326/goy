@@ -9,6 +9,7 @@ import * as InputUtil from "../../../util/input";
 import * as CookieUtil from "../../../util/cookie";
 import I18nUtil from "../../../util/i18n";
 import * as GlobalConst from "../../../globalconst";
+import * as Sounds from "../sounds";
 
 class SettingMenu extends Container {
     constructor(game, inputPriority, closeCallback) {
@@ -126,6 +127,7 @@ class SettingMenu extends Container {
             Config.MainTextureAtlasKey.CheckBox1,
             Config.MainTextureAtlasKey.CheckBox2
         );
+        soundCheckBox.onInputDown.add(Sounds.playClick);
         soundCheckBox.input.priorityID = buttonPriority;
         soundCheckBox.input.useHandCursor = true;
         this.addInput("soundCheckBox", soundCheckBox);
@@ -142,6 +144,7 @@ class SettingMenu extends Container {
             Config.MainTextureAtlasKey.CheckBox1,
             Config.MainTextureAtlasKey.CheckBox2
         );
+        sandLedgeCheckBox.onInputDown.add(Sounds.playClick);
         sandLedgeCheckBox.input.priorityID = buttonPriority;
         sandLedgeCheckBox.input.useHandCursor = true;
         this.addInput("sandLedgeCheckBox", sandLedgeCheckBox);
@@ -158,6 +161,7 @@ class SettingMenu extends Container {
             Config.MainTextureAtlasKey.CheckBox1,
             Config.MainTextureAtlasKey.CheckBox2
         );
+        jumpLedgeCheckBox.onInputDown.add(Sounds.playClick);
         jumpLedgeCheckBox.input.priorityID = buttonPriority;
         jumpLedgeCheckBox.input.useHandCursor = true;
         this.addInput("jumpLedgeCheckBox", jumpLedgeCheckBox);
@@ -174,6 +178,7 @@ class SettingMenu extends Container {
             Config.MainTextureAtlasKey.CheckBox1,
             Config.MainTextureAtlasKey.CheckBox2
         );
+        rollLedgeCheckBox.onInputDown.add(Sounds.playClick);
         rollLedgeCheckBox.input.priorityID = buttonPriority;
         rollLedgeCheckBox.input.useHandCursor = true;
         this.addInput("rollLedgeCheckBox", rollLedgeCheckBox);

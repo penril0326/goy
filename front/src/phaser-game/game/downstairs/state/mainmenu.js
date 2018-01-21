@@ -7,6 +7,7 @@ import Mask from "../../../element/mask";
 import * as GameUtil from "../../../util/game";
 import * as InputUtil from "../../../util/input";
 import I18nUtil from "../../../util/i18n";
+import * as Sounds from "../sounds";
 
 class MainMenuState extends Phaser.State {
     constructor() {
@@ -61,6 +62,7 @@ class MainMenuState extends Phaser.State {
         play1PBtn.inputEnabled = true;
         play1PBtn.input.useHandCursor = true;
         play1PBtn.events.onInputUp.add(this.play1p.bind(this));
+        play1PBtn.events.onInputDown.add(Sounds.playClick);
         play1PBtn.events.onInputOver.add(GameUtil.scaleBig);
         play1PBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         play1PBtn.input.priorityID = this.mainMenuIputPriority;
@@ -84,6 +86,7 @@ class MainMenuState extends Phaser.State {
         play2PBtn.inputEnabled = true;
         play2PBtn.input.useHandCursor = true;
         play2PBtn.events.onInputUp.add(this.play2p.bind(this));
+        play2PBtn.events.onInputDown.add(Sounds.playClick);
         play2PBtn.events.onInputOver.add(GameUtil.scaleBig);
         play2PBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         play2PBtn.input.priorityID = this.mainMenuIputPriority;
@@ -133,6 +136,7 @@ class MainMenuState extends Phaser.State {
         settingBtn.inputEnabled = true;
         settingBtn.input.useHandCursor = true;
         settingBtn.events.onInputUp.add(this.onSettingButtonClicked.bind(this));
+        settingBtn.events.onInputDown.add(Sounds.playClick);
         settingBtn.events.onInputOver.add(GameUtil.scaleBig);
         settingBtn.events.onInputOut.add(GameUtil.scaleOrigin);
         settingBtn.input.priorityID = this.mainMenuIputPriority;

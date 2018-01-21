@@ -9,6 +9,9 @@ import bitmap_doll from "../../../../../front/style/font/doll.png";
 import bitmap_doll_fnt from "../../../../../front/style/font/doll.fnt";
 import bitmap_doll_big from "../../../../../front/style/font/doll-big.png";
 import bitmap_doll_big_fnt from "../../../../../front/style/font/doll-big.fnt";
+import sounds_mp3 from "../../../../../front/style/audio/sounds.mp3";
+import sounds_ogg from "../../../../../front/style/audio/sounds.ogg";
+import sounds_json from "../../../../../front/style/audio/sounds";
 
 
 
@@ -237,6 +240,23 @@ export const DollBigBitmapFontName = "doll-big";
 export const DollBigBitmapFontPath = {
     Texture: bitmap_doll_big,
     Atlas: bitmap_doll_big_fnt
+};
+
+export const SoundsName = "sounds";
+export const SoundsPath = {
+    MP3: sounds_mp3,
+    OGG: sounds_ogg,
+    JSON: sounds_json
+};
+export const SoundsKey = {
+    Click: "click",
+    HitGround: "hitground",
+    HitIron: "hitiron",
+    Hurt: "hurt",
+    Jump: "jump",
+    Over: "over",
+    SandFall: "sandfall",
+    Scream: "scream"
 };
 
 // for assets

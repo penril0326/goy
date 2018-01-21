@@ -1,6 +1,8 @@
 import Phaser from "phaser";
 import * as Config from "../config";
 import * as TimeUtil from "../../../util/time";
+import * as Sounds from "../sounds";
+
 class PreloadState extends Phaser.State {
     constructor() {
         super();
@@ -74,6 +76,16 @@ class PreloadState extends Phaser.State {
             Config.DollBigBitmapFontPath.Atlas
         );
 
+        // 載入音效
+        this.game.load.audiosprite(
+            Config.SoundsName,
+            [
+                Config.SoundsPath.MP3,
+                Config.SoundsPath.OGG
+            ],
+            Config.SoundsPath.JSON
+        );
+
         this.game.load.start();
     }
 
@@ -82,6 +94,7 @@ class PreloadState extends Phaser.State {
     }
 
     loadComplete() {
+        Sounds.init(this.game);
         TimeUtil.sleep(300).then(() => {
             this.game.state.start("MainMenu");
         });
