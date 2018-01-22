@@ -58,8 +58,9 @@ module.exports = {
             {test: /p2\.js/, use: ["expose-loader?p2"]},
             {test: /\.css$/, use: ["style-loader", "css-loader"]},
             // img的輸出路徑 (相對於output.path)
-            {test: /\.(png|jpg|gif)$/, use: [{loader: "file-loader", options: {outputPath: "../img/"}}]},
+            {test: /^(?!.*static\/).*\.(png|jpg|gif)$/, use: [{loader: "file-loader", options: {outputPath: "../img/"}}],},
             {test: /\.(fnt)$/, use: [{loader: "file-loader", options: {outputPath: "../font/"}}]},
+            {test: /ogcover\.png$/, use: [{loader: "file-loader", options: {name: "ogcover.png", outputPath: "../img/"}}]},
             {test: /favicon\.ico$/, use: [{loader: "file-loader", options: {name: "favicon.ico", outputPath: "../img/"}}]},
             {test: /\.(json)$/, use: [{loader: "file-loader", options: {outputPath: "../json/"}}]},
             {test: /\.(mp3|ogg)$/, use: [{loader: "file-loader", options: {outputPath: "../audio/"}}]},

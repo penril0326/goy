@@ -37,7 +37,18 @@ func Index(writer http.ResponseWriter, request *http.Request) {
     indexTemplate := template.New(loader.Json.GetString("IndexFile"))
     indexTemplate.ParseFiles(loader.Json.GetString("ExportDir") + loader.Json.GetString("IndexFile"))
     data := tpl_dto.Container{
-        Title: "Downstairs",
+        Title: loader.Json.GetString("Title"),
+        Description: loader.Json.GetString("Description"),
+        KeyWords: loader.Json.GetString("KeyWords"),
+        Author: loader.Json.GetString("Author"),
+        OgSiteName: loader.Json.GetString("OgSiteName"),
+        OgUrl: loader.Json.GetString("OgUrl"),
+        OgType: loader.Json.GetString("OgType"),
+        OgTitle: loader.Json.GetString("OgTitle"),
+        OgDescription: loader.Json.GetString("OgDescription"),
+        OgImage: loader.Json.GetString("OgImage"),
+        OgImageWidth: loader.Json.GetString("OgImageWidth"),
+        OgImageHeight: loader.Json.GetString("OgImageHeight"),
         Data:  "",
     }
     err = indexTemplate.Execute(writer, data)
