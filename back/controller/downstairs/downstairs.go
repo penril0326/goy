@@ -12,12 +12,7 @@ import (
 )
 
 func Index(writer http.ResponseWriter, request *http.Request) {
-    c, err := client.NewClient(request)
-    if err != nil {
-        logger.Write(logger.AppErrorExceptionStatus, err.Error())
-        http.Error(writer, "Server Error", http.StatusInternalServerError)
-        return
-    }
+    c := client.NewClient(request)
     i18n.Load(c.Lang)
     if c.IsUseMobile {
         http.Error(writer, i18n.Dict[i18n.GameNoSupportMobile], http.StatusServiceUnavailable)

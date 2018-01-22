@@ -7,6 +7,7 @@
     <meta name="description" content="{{html .Description}}" >
     <meta name="keywords" content="{{html .KeyWords}}" >
     <meta name="author" content="{{html .Author}}" >
+    <meta property="fb:app_id" content="1760533453979619"/>
     <meta property="og:site_name" content="{{html .OgSiteName}}" >
     <meta property="og:url" content="{{html .OgUrl}}" >
     <meta property="og:type" content="{{html .OgType}}" >
@@ -25,6 +26,25 @@
     <link rel="icon" type="image/x-icon" href="/assets/img/favicon.ico">
 </head>
 <body>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : "1760533453979619",
+            cookie     : true,
+            xfbml      : true,
+            version    : "v2.11"
+        });
+        FB.AppEvents.logPageView();
+    };
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
+
 <div id="container"></div>
 <div id="secret" style="display: none;"> {{html .Data}}</div>
 </body>

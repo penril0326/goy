@@ -23,7 +23,7 @@ type Client struct {
     request        http.Request
 }
 
-func NewClient(req *http.Request) (*Client, error) {
+func NewClient(req *http.Request) *Client {
     _, filename, _, ok := runtime.Caller(0)
     if !ok {
         panic("No caller information")
@@ -33,7 +33,8 @@ func NewClient(req *http.Request) (*Client, error) {
     c.IP = realip.FromRequest(req)
     err := c.initCountry(geoDbPath)
     if err != nil {
-        return nil, err
+        c.Country = "No get."
+        c.IsoCode = "US"
     }
     c.initLang(req, c.IsoCode)
     ua := user_agent.New(req.UserAgent())
@@ -41,7 +42,7 @@ func NewClient(req *http.Request) (*Client, error) {
     c.Browser, c.BrowserVersion = ua.Browser()
     c.IsUseMobile = ua.Mobile()
     c.request = *req
-    return c, nil
+    return c
 }
 
 func (c *Client) initCountry(geoDbPath string) error {
