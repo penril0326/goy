@@ -462,7 +462,7 @@ export const PlayerLeftSpeed = -220;
 export const PlayerRightSpeed = 220;
 export const MaxLedgesNumber = 8;
 export const MiddleLedgesNumber = MaxLedgesNumber / 2;
-export const LedgeBasicSpeed = 115;
+export const LedgeBasicSpeed = 170;
 export const LedgePos = {
     MinX: 60 * PixelScaleRate,
     MaxX: 620 * PixelScaleRate,

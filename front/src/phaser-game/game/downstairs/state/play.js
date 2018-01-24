@@ -215,7 +215,7 @@ class PlayState extends Phaser.State {
             if (!player.isHurted) {
                 player.hurt();
                 player.showHurtEffect();
-                lifebar.addLife(-4);
+                lifebar.addLife(-5);
                 if (lifebar.life <= 0) {
                     Sounds.playScream();
                 } else {
@@ -386,7 +386,7 @@ class PlayState extends Phaser.State {
             if (player.isOnLedge === false) {
                 player.isOnLedge = true;
                 if (ledge.name === Config.LedgeTypes.Thorn) {
-                    playerLifeBar.addLife(-4);
+                    playerLifeBar.addLife(-5);
                     player.showHurtEffect();
                 } else {
                     playerLifeBar.addLife(1);
@@ -422,10 +422,12 @@ class PlayState extends Phaser.State {
 
     adjustGameDifficulty() {
         let time = this.scrollCounter.counts;
-        let degree = Math.floor(time / 10);
-        if (degree > 24) {
+        let degree = Math.floor(time / 5);
+        if (degree > 48) {
             return;
         }
+        let thornMaxRate = 0.65;
+        let thornBaseRate = 0.25;
         let normalWeight = Config.DefaultNormalLedgeWeight;
         let sandWeight = Config.DefaultSandLedgeWeight;
         let thornWeight = Config.DefaultThornLedgeWeight;
@@ -435,27 +437,34 @@ class PlayState extends Phaser.State {
 
         if (this.setting.SandLedge === false) {
             sandWeight = 0;
-            normalWeight --;
+            thornMaxRate += 0.04;
+            thornBaseRate += 0.04;
         } else {
-            sandWeight = sandWeight + Math.floor(time / 15);
+            sandWeight = sandWeight + Math.floor(time / 5);
         }
         if (this.setting.JumpLedge === false) {
             jumpWeight = 0;
-            normalWeight --;
+            thornMaxRate += 0.03;
+            thornBaseRate += 0.03;
         } else {
-            jumpWeight = jumpWeight + Math.floor(time / 25);
+            jumpWeight = jumpWeight + Math.floor(time / 8);
         }
         if (this.setting.RollLedge === false) {
             leftWeight = 0;
             rightWeight = 0;
-            normalWeight --;
+            thornMaxRate += 0.03;
+            thornBaseRate += 0.03;
         } else {
-            leftWeight = leftWeight + Math.floor(time / 25);
-            rightWeight = rightWeight + Math.floor(time / 25);
+            leftWeight = leftWeight + Math.floor(time / 10);
+            rightWeight = rightWeight + Math.floor(time / 10);
         }
-        normalWeight += degree;
-        thornWeight += degree;
-        this.ledgesRunner.setLedgeSpeed(Config.LedgeBasicSpeed + (5 * degree));
+        normalWeight += Math.floor(degree * 1.5);
+        let thornRate = thornBaseRate + (degree / 50);
+        if (thornRate > thornMaxRate) {
+            thornRate = thornMaxRate;
+        }
+        thornWeight = Math.floor((normalWeight + sandWeight + jumpWeight + rightWeight + leftWeight) * thornRate);
+        this.ledgesRunner.setLedgeSpeed(Config.LedgeBasicSpeed + Math.floor(2.5 * degree));
         this.ledgesRunner.setLedgeWeight(normalWeight, sandWeight, jumpWeight, thornWeight, leftWeight, rightWeight);
     }
 

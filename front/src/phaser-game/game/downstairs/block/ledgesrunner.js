@@ -31,6 +31,7 @@ class LedgesRunner extends Container {
         if (rightWeight === undefined) {
             rightWeight = Config.DefaultRightLedgeWeight;
         }
+        this.prevLedge = null;
 
         this.normalWeight = normalWeight;
         this.sandWeight = sandWeight;
@@ -60,13 +61,6 @@ class LedgesRunner extends Container {
         ledgeSet.forEach((ledge, index) => {
             ledge.x = MathUtil.getRandomInt(Config.LedgePos.MinX, Config.LedgePos.MaxX);
             ledge.y = Config.LedgePos.BaseY + (Config.LedgePos.MarginY * index);
-            if (index === Config.MiddleLedgesNumber) {
-                ledge.x = Config.LedgeMiddlePos.X;
-                ledge.y = Config.LedgeMiddlePos.Y;
-                ledge.setToNormalType();
-            } else {
-                ledge.randLedgeType(this.ledgesRate);
-            }
         });
     }
 
@@ -101,6 +95,32 @@ class LedgesRunner extends Container {
         ArrayUtil.pushElementToArray(rate, Config.LedgeTypes.Right, this.rightWeight);
         this.ledgesRate = rate;
         return this.ledgesRate;
+    }
+
+    randAllLedges() {
+        let ledgeSet = this.getAll();
+        ledgeSet.forEach((ledge) => {
+            ledge.randLedgeType(this.ledgesRate);
+        });
+    }
+
+    setLedgePos(index, x, y) {
+        let ledgeSet = this.getAll();
+        if (index in ledgeSet) {
+            if (x !== undefined) {
+                ledgeSet[index].x = x;
+            }
+            if (y !== undefined) {
+                ledgeSet[index].y = y;
+            }
+        }
+    }
+
+    setLedgeToNormalType(index) {
+        let ledgeSet = this.getAll();
+        if (index in ledgeSet) {
+            ledgeSet[index].setToNormalType();
+        }
     }
 
     addLedgeWeight(type, weight) {
@@ -145,6 +165,17 @@ class LedgesRunner extends Container {
         this.reCalculateRate();
     }
 
+    printAllLedgesPos() {
+        let ledgesSet = this.getAll();
+        ledgesSet.forEach((ledge, index) => {
+            if (index === ledgesSet.length -1) {
+                console.log("index: "+ index.toString() + ": " + (ledge.y - ledgesSet[0].y).toString() );
+                return;
+            }
+            console.log("index: "+ index.toString() + ": " + (ledge.y - ledgesSet[index + 1].y).toString() );
+        });
+    }
+
     setLedgeSpeed(speed) {
         this.speed = speed;
         this.run();
@@ -171,8 +202,13 @@ class LedgesRunner extends Container {
             Config.LedgePos.MinX,
             Config.LedgePos.MaxX
         );
-        ledge.y = Config.LedgePos.MaxY;
         ledge.randLedgeType(this.ledgesRate);
+        if (this.prevLedge == null) {
+            ledge.y = Config.LedgePos.MaxY;
+        } else {
+            ledge.y = this.prevLedge.y + Config.LedgePos.MarginY;
+        }
+        this.prevLedge = ledge;
         GameUtil.moveToXY(
             this.game,
             ledge,

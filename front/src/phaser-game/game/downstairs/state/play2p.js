@@ -110,6 +110,13 @@ class Play2pState extends PlayState {
 
         // 配置每種階梯的比重 (該比重會影響階梯的出現率)
         this.adjustGameDifficulty();
+        // 亂數設置所有階梯的種類
+        this.ledgesRunner.randAllLedges();
+        // 將中間的階梯設為普通階梯，並將位置移到玩家初始所站位置
+        this.ledgesRunner.setLedgeToNormalType(Config.MiddleLedgesNumber);
+        this.ledgesRunner.setLedgePos(Config.MiddleLedgesNumber, Config.LedgeMiddlePos.X, Config.LedgeMiddlePos.Y);
+
+        // 每5秒調整一次遊戲難度
         this.gameTimer.loop(Phaser.Timer.SECOND * 5,  this.adjustGameDifficulty.bind(this), this);
 
         // 開始遊戲！

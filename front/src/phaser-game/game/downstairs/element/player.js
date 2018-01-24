@@ -37,7 +37,7 @@ class Player extends Phaser.Sprite {
 
         // create an effect to show when hurting
         this.effect = new Phaser.Sprite(this.game, this.centerX, this.centerY, key, frame);
-        this.effect.anchor.setTo(0.5, 0.5);
+        this.effect.anchor.setTo(0.5, 1);
         this.effect.scale.setTo(1.15, 1.15);
         this.effect.visible = false;
     }
@@ -66,7 +66,7 @@ class Player extends Phaser.Sprite {
         let toggle = true;
         let moveLoop = this.game.time.events.loop(this.game.time.physicsElapsedMS, () => {
             this.effect.x = this.centerX;
-            this.effect.y = this.centerY;
+            this.effect.y = this.bottom;
             this.effect.frameName = this.frameName;
             this.effect.visible = true;
         }, this);
